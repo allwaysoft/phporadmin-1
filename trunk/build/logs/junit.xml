@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="98" assertions="177" failures="0" errors="0" time="0.204885">
+    <testsuite name="Classes" tests="96" assertions="174" failures="0" errors="0" time="0.097394">
+      <testsuite name="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" fullPackage="PhpMyAdmin" package="PhpMyAdmin" tests="22" assertions="62" failures="0" errors="0" time="0.084468">
+        <testcase name="testCheckSystem" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="46" assertions="3" time="0.004366"/>
+        <testcase name="testCheckOutputCompression" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="55" assertions="2" time="0.003822"/>
+        <testcase name="testCheckClient" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="78" assertions="13" time="0.003548"/>
+        <testcase name="testCheckGd2" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="119" assertions="3" time="0.005679"/>
+        <testcase name="testCheckWebServer" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="163" assertions="2" time="0.003476"/>
+        <testcase name="testCheckWebServerOs" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="176" assertions="1" time="0.002174"/>
+        <testcase name="testCheckPhpVersion" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="200" assertions="2" time="0.002961"/>
+        <testcase name="testLoadDefaults" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="225" assertions="7" time="0.010283"/>
+        <testcase name="testCheckConfigSource" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="255" assertions="4" time="0.004280"/>
+        <testcase name="testGetAndSet" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="275" assertions="2" time="0.002193"/>
+        <testcase name="testGetSetSource" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="288" assertions="2" time="0.002818"/>
+        <testcase name="testCheckPmaAbsoluteUriEmpty" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="299" assertions="2" time="0.002582"/>
+        <testcase name="testCheckPmaAbsoluteUriNormal" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="309" assertions="2" time="0.003223"/>
+        <testcase name="testCheckPmaAbsoluteUriScheme" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="324" assertions="1" time="0.002149"/>
+        <testcase name="testCheckPmaAbsoluteUriUser" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="340" assertions="2" time="0.003098"/>
+        <testcase name="testCheckCollationConnection" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="353" assertions="1" time="0.002620"/>
+        <testcase name="testIsHttps" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="361" assertions="2" time="0.002136"/>
+        <testcase name="testDetectHttps" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="370" assertions="6" time="0.002345"/>
+        <testcase name="testCheckCookiePath" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="399" assertions="1" time="0.003302"/>
+        <testcase name="testLoad" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="526" assertions="2" time="0.013025"/>
+        <testcase name="testLoadUserPreferences" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="536" assertions="1" time="0.002080"/>
+        <testcase name="testSetCookie" class="PMA_ConfigTest" file="/opt/lampp/phporadmin/test/classes/PMA_Config_test.php" line="594" assertions="1" time="0.002308"/>
+      </testsuite>
+      <testsuite name="PMA_List_Database_test" file="/opt/lampp/phporadmin/test/classes/PMA_List_Database_test.php" fullPackage="PhpMyAdmin" package="PhpMyAdmin" tests="6" assertions="6" failures="0" errors="0" time="0.000584">
+        <testcase name="testEmpty" class="PMA_List_Database_test" file="/opt/lampp/phporadmin/test/classes/PMA_List_Database_test.php" line="22" assertions="1" time="0.000016"/>
+        <testcase name="testSingle" class="PMA_List_Database_test" file="/opt/lampp/phporadmin/test/classes/PMA_List_Database_test.php" line="28" assertions="1" time="0.000114"/>
+        <testcase name="testExists" class="PMA_List_Database_test" file="/opt/lampp/phporadmin/test/classes/PMA_List_Database_test.php" line="34" assertions="1" time="0.000078"/>
+        <testcase name="testLimitedItems" class="PMA_List_Database_test" file="/opt/lampp/phporadmin/test/classes/PMA_List_Database_test.php" line="40" assertions="1" time="0.000168"/>
+        <testcase name="testLimitedItems_empty" class="PMA_List_Database_test" file="/opt/lampp/phporadmin/test/classes/PMA_List_Database_test.php" line="46" assertions="1" time="0.000076"/>
+        <testcase name="testHtmlOptions" class="PMA_List_Database_test" file="/opt/lampp/phporadmin/test/classes/PMA_List_Database_test.php" line="52" assertions="1" time="0.000132"/>
+      </testsuite>
+      <testsuite name="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" fullPackage="PhpMyAdmin" package="PhpMyAdmin" tests="38" assertions="61" failures="0" errors="0" time="0.005421">
+        <testcase name="test__toString" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="49" assertions="1" time="0.000199"/>
+        <testcase name="testSuccess" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="58" assertions="2" time="0.000318"/>
+        <testcase name="testError" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="68" assertions="2" time="0.000194"/>
+        <testcase name="testNotice" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="78" assertions="1" time="0.000176"/>
+        <testcase name="testRawError" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="87" assertions="1" time="0.000285"/>
+        <testcase name="testRawNotice" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="98" assertions="1" time="0.000130"/>
+        <testcase name="testRawSuccess" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="109" assertions="1" time="0.000126"/>
+        <testcase name="testIsSuccess" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="120" assertions="2" time="0.000070"/>
+        <testcase name="testIsNotice" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="129" assertions="3" time="0.000120"/>
+        <testcase name="testIsError" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="140" assertions="2" time="0.000109"/>
+        <testcase name="testSetMessage" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="149" assertions="2" time="0.000120"/>
+        <testcase name="testSetString" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="160" assertions="2" time="0.000092"/>
+        <testcase name="testAddParam" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="171" assertions="3" time="0.000282"/>
+        <testcase name="testAddString" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="184" assertions="2" time="0.000248"/>
+        <testcase name="testAddMessage" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="195" assertions="2" time="0.000045"/>
+        <testcase name="testAddMessages" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="206" assertions="1" time="0.000255"/>
+        <testcase name="testSetParams" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="220" assertions="2" time="0.000075"/>
+        <testcase name="testSanitize" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="231" assertions="2" time="0.000113"/>
+        <testsuite name="PMA_Message_test::testDecodeBB" tests="7" assertions="7" failures="0" errors="0" time="0.000692">
+          <testcase name="testDecodeBB with data set #0" assertions="1" time="0.000105"/>
+          <testcase name="testDecodeBB with data set #1" assertions="1" time="0.000079"/>
+          <testcase name="testDecodeBB with data set #2" assertions="1" time="0.000126"/>
+          <testcase name="testDecodeBB with data set #3" assertions="1" time="0.000078"/>
+          <testcase name="testDecodeBB with data set #4" assertions="1" time="0.000082"/>
+          <testcase name="testDecodeBB with data set #5" assertions="1" time="0.000110"/>
+          <testcase name="testDecodeBB with data set #6" assertions="1" time="0.000112"/>
+        </testsuite>
+        <testcase name="testFormat" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="286" assertions="4" time="0.000232"/>
+        <testcase name="testGetHash" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="298" assertions="1" time="0.000224"/>
+        <testcase name="testGetMessageWithoutMessageWithStringWithParams" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="309" assertions="1" time="0.000103"/>
+        <testcase name="testGetMessageWithoutMessageWithEmptyString" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="321" assertions="1" time="0.000075"/>
+        <testcase name="testGetMessageWithoutMessageWithGlobalStringWithAddMessages" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="332" assertions="1" time="0.000151"/>
+        <testcase name="testGetMessageWithMessageWithBBCode" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="347" assertions="1" time="0.000111"/>
+        <testcase name="testGetLevel" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="356" assertions="3" time="0.000033"/>
+        <testcase name="testDisplay" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="368" assertions="3" time="0.000147"/>
+        <testcase name="testGetDisplay" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="382" assertions="1" time="0.000086"/>
+        <testcase name="testIsDisplayed" class="PMA_Message_test" file="/opt/lampp/phporadmin/test/classes/PMA_Message_test.php" line="391" assertions="3" time="0.000100"/>
+        <testsuite name="PMA_Message_test::testAffectedRows" tests="1" assertions="1" failures="0" errors="0" time="0.000289">
+          <testcase name="testAffectedRows with data set #0" assertions="1" time="0.000289"/>
+        </testsuite>
+        <testsuite name="PMA_Message_test::testInsertedRows" tests="1" assertions="1" failures="0" errors="0" time="0.000045">
+          <testcase name="testInsertedRows with data set #0" assertions="1" time="0.000045"/>
+        </testsuite>
+        <testsuite name="PMA_Message_test::testDeletedRows" tests="1" assertions="1" failures="0" errors="0" time="0.000177">
+          <testcase name="testDeletedRows with data set #0" assertions="1" time="0.000177"/>
+        </testsuite>
+      </testsuite>
+      <testsuite name="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" fullPackage="PMA" tests="18" assertions="30" failures="0" errors="0" time="0.002528">
+        <testcase name="testCheckImgPathNotExisted" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="33" assertions="1" time="0.000096"/>
+        <testcase name="testCheckImgPathIncorrect" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="39" assertions="1" time="0.000222"/>
+        <testcase name="testCheckImgPathFull" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="45" assertions="3" time="0.000266"/>
+        <testcase name="testLoadInfo" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="53" assertions="4" time="0.000217"/>
+        <testcase name="testLoad" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="66" assertions="1" time="0.000152"/>
+        <testcase name="testLoadNotExisted" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="72" assertions="1" time="0.000065"/>
+        <testcase name="testCheckImgPathBad" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="80" assertions="1" time="0.000196"/>
+        <testcase name="testCheckImgPath" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="89" assertions="1" time="0.000059"/>
+        <testcase name="testCheckImgPathGlobals" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="95" assertions="1" time="0.000065"/>
+        <testcase name="testCheckImgPathGlobalsWrongPath" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="105" assertions="1" time="0.000231"/>
+        <testcase name="testGetSetPath" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="120" assertions="2" time="0.000084"/>
+        <testcase name="testGetLayoutFile" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="128" assertions="1" time="0.000313"/>
+        <testcase name="testGetSetCheckVersion" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="136" assertions="4" time="0.000107"/>
+        <testcase name="testGetSetName" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="151" assertions="2" time="0.000098"/>
+        <testcase name="testGetSetId" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="163" assertions="2" time="0.000063"/>
+        <testcase name="testGetSetImgPath" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="175" assertions="2" time="0.000161"/>
+        <testcase name="testLoadCssWrongType" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="183" assertions="1" time="0.000059"/>
+        <testcase name="testLoadCssNotExisted" class="PMA_ThemeTest" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_test.php" line="189" assertions="1" time="0.000073"/>
+      </testsuite>
+      <testsuite name="PMA_File_test" file="/opt/lampp/phporadmin/test/classes/PMA_File_test.php" fullPackage="PhpMyAdmin" package="PhpMyAdmin" tests="9" assertions="12" failures="0" errors="0" time="0.003019">
+        <testsuite name="PMA_File_test::testMIME" tests="3" assertions="3" failures="0" errors="0" time="0.000486">
+          <testcase name="testMIME with data set #0" assertions="1" time="0.000141"/>
+          <testcase name="testMIME with data set #1" assertions="1" time="0.000098"/>
+          <testcase name="testMIME with data set #2" assertions="1" time="0.000247"/>
+        </testsuite>
+        <testsuite name="PMA_File_test::testContent" tests="3" assertions="6" failures="0" errors="0" time="0.002127">
+          <testcase name="testContent with data set #0" assertions="2" time="0.000480"/>
+          <testcase name="testContent with data set #1" assertions="2" time="0.000356"/>
+          <testcase name="testContent with data set #2" assertions="2" time="0.001291"/>
+        </testsuite>
+        <testsuite name="PMA_File_test::testBinaryContent" tests="3" assertions="3" failures="0" errors="0" time="0.000406">
+          <testcase name="testBinaryContent with data set #0" assertions="1" time="0.000151"/>
+          <testcase name="testBinaryContent with data set #1" assertions="1" time="0.000143"/>
+          <testcase name="testBinaryContent with data set #2" assertions="1" time="0.000112"/>
+        </testsuite>
+      </testsuite>
+      <testsuite name="PMA_Theme_Manager_test" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_Manager_test.php" fullPackage="PhpMyAdmin" package="PhpMyAdmin" tests="3" assertions="3" failures="0" errors="0" time="0.001375">
+        <testcase name="testCookieName" class="PMA_Theme_Manager_test" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_Manager_test.php" line="30" assertions="1" time="0.000688"/>
+        <testcase name="testPerServerCookieName" class="PMA_Theme_Manager_test" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_Manager_test.php" line="36" assertions="1" time="0.000394"/>
+        <testcase name="testHtmlSelectBox" class="PMA_Theme_Manager_test" file="/opt/lampp/phporadmin/test/classes/PMA_Theme_Manager_test.php" line="43" assertions="1" time="0.000293"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Unit" tests="2" assertions="3" failures="0" errors="0" time="0.107490">
+      <testsuite name="Environment_test" file="/opt/lampp/phporadmin/test/Environment_test.php" fullPackage="PhpMyAdmin" package="PhpMyAdmin" tests="2" assertions="3" failures="0" errors="0" time="0.107490">
+        <testcase name="testPhpVersion" class="Environment_test" file="/opt/lampp/phporadmin/test/Environment_test.php" line="19" assertions="1" time="0.000160"/>
+        <testcase name="testOracle" class="Environment_test" file="/opt/lampp/phporadmin/test/Environment_test.php" line="25" assertions="2" time="0.107330"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
