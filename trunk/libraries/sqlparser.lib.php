@@ -131,7 +131,7 @@ if (! defined('PMA_MINIMUM_COMMON')) {
     function PMA_SQP_throwError($message, $sql)
     {
         global $SQP_errorString;
-        $SQP_errorString = '<p>'.__('There seems to be an error in your SQL query. The MySQL server error output below, if there is any, may also help you in diagnosing the problem') . '</p>' . "\n"
+        $SQP_errorString = '<p>'.__('There seems to be an error in your SQL query. The Oracle server error output below, if there is any, may also help you in diagnosing the problem') . '</p>' . "\n"
             . '<pre>' . "\n"
             . 'ERROR: ' . $message . "\n"
             . 'SQL: ' . htmlspecialchars($sql) .  "\n"
@@ -166,7 +166,7 @@ if (! defined('PMA_MINIMUM_COMMON')) {
         $encodedstr     = preg_replace("/(\015\012)|(\015)|(\012)/", '<br />' . "\n", chunk_split(base64_encode($encodedstr)));
 
 
-        $SQP_errorString .= __('There is a chance that you may have found a bug in the SQL parser. Please examine your query closely, and check that the quotes are correct and not mis-matched. Other possible failure causes may be that you are uploading a file with binary outside of a quoted text area. You can also try your query on the MySQL command line interface. The MySQL server error output below, if there is any, may also help you in diagnosing the problem. If you still have problems or if the parser fails where the command line interface succeeds, please reduce your SQL query input to the single query that causes problems, and submit a bug report with the data chunk in the CUT section below:')
+        $SQP_errorString .= __('There is a chance that you may have found a bug in the SQL parser. Please examine your query closely, and check that the quotes are correct and not mis-matched. Other possible failure causes may be that you are uploading a file with binary outside of a quoted text area. You can also try your query on the MySQL command line interface. The Oracle server error output below, if there is any, may also help you in diagnosing the problem. If you still have problems or if the parser fails where the command line interface succeeds, please reduce your SQL query input to the single query that causes problems, and submit a bug report with the data chunk in the CUT section below:')
              . '<br />' . "\n"
              . '----' . __('BEGIN CUT') . '----' . '<br />' . "\n"
              . $encodedstr . "\n"

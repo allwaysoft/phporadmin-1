@@ -41,10 +41,29 @@ if (isset($_REQUEST['do_save_data'])) {
     $field_cnt = count($_REQUEST['field_orig']);
     $key_fields = array();
     $changes = array();
+        
+
 
     for ($i = 0; $i < $field_cnt; $i++) {
-        $changes[] = 'CHANGE ' . PMA_Table::generateAlter(
-            $_REQUEST['field_orig'][$i],
+        $field_null_value =    isset($_REQUEST['field_null'][$i])
+                ? 'Y'
+                : 'N';
+        print_r($_REQUEST['field_null']);
+        print_r($_REQUEST['field_null_orig'][$i]);
+        if($field_null_value == $_REQUEST['field_null_orig'][$i])
+          print_r('asfasdxxxx');
+        $field_null_value = ($field_null_value == $_REQUEST['field_null_orig'][$i])
+                ? false
+                : (($field_null_value == 'Y') ? 'NULL': 'NOT NULL');
+        print_r($field_null_value);
+        print_r('xxx');
+        //print_r($field_null_str);
+        //if($field_null_value == 'N')
+            //$field_null_str = 'NOT NULL';
+        //elseif(
+        $changes[] = '' . PMA_Table::generateAlter(
+            //$_REQUEST['field_orig'][$i],
+            '',
             $_REQUEST['field_name'][$i],
             $_REQUEST['field_type'][$i],
             $_REQUEST['field_length'][$i],
@@ -52,9 +71,7 @@ if (isset($_REQUEST['do_save_data'])) {
             isset($_REQUEST['field_collation'][$i])
                 ? $_REQUEST['field_collation'][$i]
                 : '',
-            isset($_REQUEST['field_null'][$i])
-                ? $_REQUEST['field_null'][$i]
-                : 'NOT NULL',
+            $field_null_value,
             $_REQUEST['field_default_type'][$i],
             $_REQUEST['field_default_value'][$i],
             isset($_REQUEST['field_extra'][$i])
@@ -68,6 +85,8 @@ if (isset($_REQUEST['do_save_data'])) {
             $_REQUEST['field_default_orig'][$i]
         );
     } // end for
+    //print_r($changes);
+    //print_r($_REQUEST);
 
     // Builds the primary keys statements and updates the table
     $key_query = '';
@@ -92,7 +111,7 @@ if (isset($_REQUEST['do_save_data'])) {
     // To allow replication, we first select the db to use and then run queries
     // on this db.
     PMA_DBI_select_db($db) or PMA_mysqlDie(PMA_DBI_getError(), 'USE ' . PMA_backquote($db) . ';', '', $err_url);
-    $sql_query = 'ALTER TABLE ' . PMA_backquote($table) . ' ' . implode(', ', $changes) . $key_query;
+    $sql_query = 'ALTER TABLE ' . PMA_backquote($table) . ' MODIFY ( ' . implode(', ', $changes) . $key_query .')';
     $result    = PMA_DBI_try_query($sql_query);
 
     if ($result !== false) {
@@ -170,10 +189,17 @@ if ($abort == false) {
      */
     for ($i = 0; $i < $selected_cnt; $i++) {
         $_REQUEST['field'] = PMA_sqlAddslashes($selected[$i], true);
-        $result        = PMA_DRIZZLE
+        $result        =  PMA_DBI_query('SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE \'' . $db . '\' AND TABLE_NAME LIKE \'' . $table . '\' AND COLUMN_NAME LIKE \'' . $_REQUEST['field'] . '\'');
+/*
+PMA_DRIZZLE
             ? PMA_DBI_query('SHOW COLUMNS FROM ' . PMA_backquote($table) . ' FROM ' . PMA_backquote($db) . ' WHERE Field = \'' . $_REQUEST['field'] . '\';')
             : PMA_DBI_query('SHOW FULL COLUMNS FROM ' . PMA_backquote($table) . ' FROM ' . PMA_backquote($db) . ' LIKE \'' . $_REQUEST['field'] . '\';');
+*/
         $fields_meta[] = PMA_DBI_fetch_assoc($result);
+//print_r($fields_meta);
+        $fields_meta[$i]['Field'] = $fields_meta[$i]['COLUMN_NAME'];
+        $fields_meta[$i]['Type'] = $fields_meta[$i]['DATA_TYPE'];
+        $fields_meta[$i]['Null'] = $fields_meta[$i]['NULLABLE'];
         PMA_DBI_free_result($result);
     }
     $num_fields  = count($fields_meta);
@@ -193,7 +219,8 @@ if ($abort == false) {
     // SHOW FULL FIELDS says NULL and SHOW CREATE TABLE says NOT NULL (tested
     // in MySQL 4.0.25).
 
-    $show_create_table = PMA_DBI_fetch_value('SHOW CREATE TABLE ' . PMA_backquote($db) . '.' . PMA_backquote($table), 0, 1);
+    $show_create_table1 = PMA_DBI_fetch_value('SELECT DBMS_METADATA.GET_DDL(\'TABLE\', \'' . $table . '\', \'' .($db) . '\') FROM DUAL', 0, 0);
+    $show_create_table = $show_create_table1->read($show_create_table1->size());
     $analyzed_sql = PMA_SQP_analyze(PMA_SQP_parse($show_create_table));
     unset($show_create_table);
     /**

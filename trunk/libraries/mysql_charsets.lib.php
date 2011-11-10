@@ -15,7 +15,7 @@ if (! PMA_cacheExists('mysql_charsets_count', true)) {
     $sql = PMA_DRIZZLE
         ? 'SELECT * FROM data_dictionary.CHARACTER_SETS'
         : 'SELECT * FROM information_schema.CHARACTER_SETS';
-    $res = PMA_DBI_query($sql);
+    //$res = PMA_DBI_query($sql);
 
     $mysql_charsets = array();
     while ($row = PMA_DBI_fetch_assoc($res)) {
@@ -35,7 +35,7 @@ if (! PMA_cacheExists('mysql_charsets_count', true)) {
     $sql = PMA_DRIZZLE
         ? 'SELECT * FROM data_dictionary.COLLATIONS'
         : 'SELECT * FROM information_schema.COLLATIONS';
-    $res = PMA_DBI_query($sql);
+    //$res = PMA_DBI_query($sql);
     while ($row = PMA_DBI_fetch_assoc($res)) {
         if (!is_array($mysql_collations[$row['CHARACTER_SET_NAME']])) {
             $mysql_collations[$row['CHARACTER_SET_NAME']] = array($row['COLLATION_NAME']);

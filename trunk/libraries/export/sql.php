@@ -620,11 +620,13 @@ function PMA_getTableDef($db, $table, $crlf, $error_url, $show_dates = false, $a
 
     // Complete table dump,
     // Whether to quote table and fields names or not
+/*
     if ($sql_backquotes) {
         PMA_DBI_query('SET SQL_QUOTE_SHOW_CREATE = 1');
     } else {
         PMA_DBI_query('SET SQL_QUOTE_SHOW_CREATE = 0');
     }
+*/
 
     // I don't see the reason why this unbuffered query could cause problems,
     // because SHOW CREATE TABLE returns only one row, and we free the

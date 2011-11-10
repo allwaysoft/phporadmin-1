@@ -242,10 +242,10 @@ $url_params['back'] = 'tbl_operations.php';
  * Get columns names
  */
 $local_query = '
-    SHOW COLUMNS
-    FROM ' . PMA_backquote($GLOBALS['table']) . '
-    FROM ' . PMA_backquote($GLOBALS['db']);
-$columns = PMA_DBI_fetch_result($local_query, null, 'Field');
+    SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE \''
+    . ($GLOBALS['db']) . '\' AND TABLE_NAME LIKE \''
+    . ($GLOBALS['table']) . '\'';
+$columns = PMA_DBI_fetch_result($local_query, null, 'COLUMN_NAME');
 unset($local_query);
 
 /**
@@ -253,6 +253,7 @@ unset($local_query);
  */
 ?>
 <!-- Order the table -->
+<!--
 <div class="operations_half_width">
 <form method="post" action="tbl_operations.php">
 <?php echo PMA_generate_common_hidden_inputs($GLOBALS['db'], $GLOBALS['table']); ?>
@@ -277,8 +278,10 @@ unset($columns);
 </fieldset>
 </form>
 </div>
+-->
 
 <!-- Move table -->
+<!--
 <div class="operations_half_width">
 <form method="post" action="tbl_operations.php"
     onsubmit="return emptyFormElements(this, 'new_name')">
@@ -337,7 +340,7 @@ if (strstr($show_comment, '; InnoDB free') === false) {
 // in >5.0.4, >4.1.12 and >4.0.11, so I decided not to
 // check for version
 ?>
-
+-->
 <!-- Table options -->
 <div class="operations_half_width clearfloat">
 <form method="post" action="tbl_operations.php">
@@ -354,28 +357,6 @@ if (strstr($show_comment, '; InnoDB free') === false) {
         </td>
     </tr>
 
-    <!-- Table comments -->
-    <tr><td><?php echo __('Table comments'); ?></td>
-        <td><input type="text" name="comment" maxlength="60" size="30"
-                value="<?php echo htmlspecialchars($comment); ?>" onfocus="this.select()" />
-            <input type="hidden" name="prev_comment" value="<?php echo htmlspecialchars($comment); ?>" />
-        </td>
-    </tr>
-
-    <!-- Storage engine -->
-    <tr><td><?php echo __('Storage Engine'); ?>
-            <?php echo PMA_showMySQLDocu('Storage_engines', 'Storage_engines'); ?>
-        </td>
-        <td><?php echo PMA_StorageEngine::getHtmlSelect('new_tbl_type', null, $tbl_type); ?>
-        </td>
-    </tr>
-
-    <!-- Table character set -->
-    <tr><td><?php echo __('Collation'); ?></td>
-        <td><?php echo PMA_generateCharsetDropdownBox(PMA_CSDROPDOWN_COLLATION,
-                'tbl_collation', null, $tbl_collation, false, 3); ?>
-        </td>
-    </tr>
 <?php
 if ($is_myisam_or_aria || $is_isam) {
     ?>
@@ -481,7 +462,7 @@ $possible_row_formats = array(
 );
 
 $innodb_engine_plugin = PMA_StorageEngine::getEngine('innodb');
-$innodb_plugin_version = $innodb_engine_plugin->getInnodbPluginVersion();
+//$innodb_plugin_version = $innodb_engine_plugin->getInnodbPluginVersion();
 if (!empty($innodb_plugin_version)) {
     $innodb_file_format = $innodb_engine_plugin->getInnodbFileFormat();
 }  else {
@@ -518,6 +499,7 @@ if (isset($possible_row_formats[$tbl_type])) {
 </div>
 
 <!-- Copy table -->
+<!--
 <div class="operations_half_width">
 <form method="post" action="tbl_operations.php"
     onsubmit="return emptyFormElements(this, 'new_name')">
@@ -578,7 +560,8 @@ if (isset($possible_row_formats[$tbl_type])) {
 </fieldset>
 </form>
 </div>
-
+-->
+<!--
 <br class="clearfloat"/>
 
 <div class="operations_half_width">
@@ -667,6 +650,7 @@ $this_url_params = array_merge($url_params,
 </ul>
 </fieldset>
 </div>
+-->
 <?php if (! (isset($db_is_information_schema) && $db_is_information_schema)) { ?>
 <div class="operations_half_width">
 <fieldset class="caution">

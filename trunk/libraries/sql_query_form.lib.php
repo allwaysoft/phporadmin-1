@@ -132,7 +132,7 @@ function PMA_sqlQueryForm($query = true, $display_tab = false, $delimiter = ';')
     }
     echo '<input type="hidden" name="is_js_confirmed" value="0" />' . "\n"
         .PMA_generate_common_hidden_inputs($db, $table) . "\n"
-        .'<input type="hidden" name="pos" value="0" />' . "\n"
+        .'<input type="hidden" name="pos" value="1" />' . "\n"
         .'<input type="hidden" name="goto" value="'
         .htmlspecialchars($goto) . '" />' . "\n"
         .'<input type="hidden" name="message_to_show" value="'
@@ -248,9 +248,9 @@ function PMA_sqlQueryFormInsert($query = '', $is_querywindow = false, $delimiter
         // we do a try_query here, because we could be in the query window,
         // trying to synchonize and the table has not yet been created
         $fields_list = PMA_DBI_fetch_result(
-            'SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE '
-            . PMA_backquote($GLOBALS['db']) . ' AND TABLE_NAME LIKE '
-            . PMA_backquote($GLOBALS['table']));
+            'SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE \''
+            . ($GLOBALS['db']) . '\' AND TABLE_NAME LIKE \''
+            . ($GLOBALS['table']) . '\'');
 
         $tmp_db_link = '<a href="' . $GLOBALS['cfg']['DefaultTabDatabase']
             . '?' . PMA_generate_common_url($db) . '"';
@@ -305,11 +305,11 @@ function PMA_sqlQueryFormInsert($query = '', $is_querywindow = false, $delimiter
             .'multiple="multiple" ondblclick="insertValueQuery()">' . "\n";
         foreach ($fields_list as $field) {
             echo '<option value="'
-                .PMA_backquote(htmlspecialchars($field['Field'])) . '"';
+                .(htmlspecialchars($field['COLUMN_NAME'])) . '"';
             if (isset($field['Field']) && strlen($field['Field']) && isset($field['Comment'])) {
                 echo ' title="' . htmlspecialchars($field['Comment']) . '"';
             }
-            echo '>' . htmlspecialchars($field['Field']) . '</option>' . "\n";
+            echo '>' . htmlspecialchars($field['COLUMN_NAME']) . '</option>' . "\n";
         }
         echo '</select>' . "\n"
             .'<div id="tablefieldinsertbuttoncontainer">' . "\n";

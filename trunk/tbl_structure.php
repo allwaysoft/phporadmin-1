@@ -41,6 +41,7 @@ if (isset($_REQUEST['submit_mult_change_x'])) {
         $_REQUEST['selected_fld'] = $_REQUEST['selected'];
     }
 }
+print_r( $_REQUEST['selected_fld']);
 
 if (! empty($submit_mult) && isset($_REQUEST['selected_fld'])) {
     $err_url = 'tbl_structure.php?' . PMA_generate_common_url($db, $table);
@@ -62,6 +63,7 @@ if (! empty($submit_mult) && isset($_REQUEST['selected_fld'])) {
         require './sql.php';
         exit;
     } else {
+print_r('xxxx');
         // handle multiple field commands
         // handle confirmation of deleting multiple fields/columns
         $action = 'tbl_structure.php';
@@ -413,7 +415,7 @@ while ($row = PMA_DBI_fetch_assoc($fields_rs)) {
             <?php echo $titles['Change']; ?></a>
     </td>
     <td align="center" class="drop">
-        <a <?php echo ($GLOBALS['cfg']['AjaxEnable'] ? ' class="drop_column_anchor"' : ''); ?> href="sql.php?<?php echo $url_query; ?>&amp;sql_query=<?php echo urlencode('ALTER TABLE ' . PMA_backquote($table) . ' DROP ' . PMA_backquote($row['Field'])); ?>&amp;dropped_column=<?php echo urlencode($row['Field']); ?>&amp;message_to_show=<?php echo urlencode(sprintf(__('Column %s has been dropped'), htmlspecialchars($row['Field']))); ?>" >
+        <a <?php echo ($GLOBALS['cfg']['AjaxEnable'] ? ' class="drop_column_anchor"' : ''); ?> href="sql.php?<?php echo $url_query; ?>&amp;sql_query=<?php echo urlencode('ALTER TABLE ' . PMA_backquote($table) . ' DROP COLUMN ' . PMA_backquote($row['Field'])); ?>&amp;dropped_column=<?php echo urlencode($row['Field']); ?>&amp;message_to_show=<?php echo urlencode(sprintf(__('Column %s has been dropped'), htmlspecialchars($row['Field']))); ?>" >
             <?php echo $titles['Drop']; ?></a>
     </td>
     <td align="center" class="primary">
@@ -594,6 +596,7 @@ if (! $tbl_is_view && ! $db_is_information_schema) {
 </form>
 <hr />
 
+
 <?php
 /**
  * Work on the table
@@ -667,8 +670,8 @@ if (! $tbl_is_view && ! $db_is_information_schema) {
         'first' => __('At Beginning of Table'),
         'after' => sprintf(__('After %s'), '')
     );
-    PMA_display_html_radio('field_where', $choices, 'last', false);
-    echo $fieldOptions;
+    //PMA_display_html_radio('field_where', $choices, 'last', false);
+    //echo $fieldOptions;
     unset($fieldOptions, $choices);
     ?>
 <input type="submit" value="<?php echo __('Go'); ?>" />

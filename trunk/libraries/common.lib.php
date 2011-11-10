@@ -557,7 +557,7 @@ function PMA_showHint($message, $bbcode = false, $type = 'notice')
  *
  * @access  public
  */
-function PMA_mysqlDie($error_message = '', $the_query = '',
+function PMA_mysqlDie($error_message = '', $the_query = '', $the_pos = 0, 
                         $is_modify_link = true, $back_url = '', $exit = true)
 {
     global $table, $db;
@@ -568,7 +568,6 @@ function PMA_mysqlDie($error_message = '', $the_query = '',
     require_once './libraries/header.inc.php';
 
     $error_msg_output = '';
-
     if (!$error_message) {
         $error_message = PMA_DBI_getError();
     }
@@ -602,10 +601,13 @@ function PMA_mysqlDie($error_message = '', $the_query = '',
         }
         // ---
         // modified to show the help on sql errors
-        $error_msg_output .= '    <p><strong>' . __('SQL query') . ':</strong>' . "\n";
+        $error_msg_output .= '    <p><strong>' . __('SQL query') . ':</strong>';
+/*
         if (strstr(strtolower($formatted_sql), 'select')) { // please show me help to the error on select
             $error_msg_output .= PMA_showMySQLDocu('SQL-Syntax', 'SELECT');
         }
+*/
+/*
         if ($is_modify_link) {
             $_url_params = array(
                 'sql_query' => $the_query,
@@ -626,9 +628,12 @@ function PMA_mysqlDie($error_message = '', $the_query = '',
                . PMA_getIcon('b_edit.png', __('Edit'))
                . '</a>';
         } // end if
+        */
         $error_msg_output .= '    </p>' . "\n"
             .'    <p>' . "\n"
-            .'        ' . $formatted_sql . "\n"
+            //.'        ' . $formatted_sql . "\n"
+            .'        ' . $the_query . "\n"
+            //.'<p>       <font size="10"><u>' . sprintf("%d%s",($the_pos+1), "<strong>^</strong></u></font>")
             .'    </p>' . "\n";
     } // end if
 
@@ -638,8 +643,7 @@ function PMA_mysqlDie($error_message = '', $the_query = '',
     // modified to show the help on error-returns
     // (now error-messages-server)
     $error_msg_output .= '<p>' . "\n"
-            . '    <strong>' . __('MySQL said: ') . '</strong>'
-            . PMA_showMySQLDocu('Error-messages-server', 'Error-messages-server')
+            . '    <strong>' . __('Oracle said: ') . '</strong>'
             . "\n"
             . '</p>' . "\n";
 
@@ -869,7 +873,7 @@ function PMA_backquote($a_name, $do_it = true)
 
     // '0' is also empty for php :-(
     if (strlen($a_name) && $a_name !== '*') {
-        return '"' . str_replace('"', '""', $a_name) . '"';
+        return '"' . str_replace('"', '""', strtoupper($a_name)) . '"';
     } else {
         return $a_name;
     }
@@ -2890,11 +2894,13 @@ function PMA_expandUserString($string, $escape = NULL, $updates = array()) {
     /* Fetch fields list if required */
     if (strpos($string, '@FIELDS@') !== FALSE) {
         $fields_list = PMA_DBI_fetch_result(
-            'SHOW COLUMNS FROM ' . PMA_backquote($GLOBALS['db'])
-            . '.' . PMA_backquote($GLOBALS['table']));
+            'SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE \''
+            . ($GLOBALS['db']) . '\' AND TABLE_NAME LIKE \''
+            . ($GLOBALS['table'])) . '\'';
 
         $field_names = array();
         foreach ($fields_list as $field) {
+            $field['Field'] = $field['COLUMN_NAME'];
             if (!is_null($escape)) {
                 $field_names[] = $escape($field['Field']);
             } else {

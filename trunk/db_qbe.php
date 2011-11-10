@@ -95,7 +95,7 @@ if (PMA_isValid($_REQUEST['TableList'], 'array')) {
 /**
  * Prepares the form
  */
-$tbl_result     = PMA_DBI_query('SHOW TABLES FROM ' . PMA_backquote($db) . ';', null, PMA_DBI_QUERY_STORE);
+$tbl_result     = PMA_DBI_query('SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER LIKE \'' . ($db) . '\'', null, PMA_DBI_QUERY_STORE);
 $tbl_result_cnt = PMA_DBI_num_rows($tbl_result);
 if (0 == $tbl_result_cnt) {
     PMA_Message::error(__('No tables found in database.'))->display();

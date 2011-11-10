@@ -20,7 +20,7 @@ if (isset($plugin_list)) {
     if ($GLOBALS['cfg']['Import']['ldi_local_option'] == 'auto') {
         $GLOBALS['cfg']['Import']['ldi_local_option'] = FALSE;
 
-        $result = PMA_DBI_try_query('SHOW VARIABLES LIKE \'local\\_infile\';');
+        //$result = PMA_DBI_try_query('SHOW VARIABLES LIKE \'local\\_infile\';');
         if ($result != FALSE && PMA_DBI_num_rows($result) > 0) {
             $tmp = PMA_DBI_fetch_row($result);
             if ($tmp[1] == 'ON') {

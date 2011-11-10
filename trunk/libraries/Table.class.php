@@ -466,9 +466,17 @@ class PMA_Table
             // for a VIEW, $row_count is always false at this point
             if (false === $row_count || $row_count < $GLOBALS['cfg']['MaxExactCount']) {
                 if (! $is_view) {
-                    $row_count = PMA_DBI_fetch_value(
-                        'SELECT COUNT(*) FROM ' . PMA_backquote($db) . '.'
-                        . PMA_backquote($table));
+                    //print_r($GLOBALS['cfg']['Server']);
+                    if($db && $db != 'undefined' && $db != strtoupper($GLOBALS['cfg']['Server']['user']))
+                        $row_count = PMA_DBI_fetch_value(
+                            'SELECT COUNT(*) FROM ' . PMA_backquote($db) 
+                            .  '.'
+                            . PMA_backquote(strtoupper($table)));
+                    else
+                        $row_count = PMA_DBI_fetch_value(
+                            'SELECT COUNT(*) FROM '
+                            . PMA_backquote(strtoupper($table)));
+
                 } else {
                     // For complex views, even trying to get a partial record
                     // count could bring down a server, so we offer an
@@ -487,6 +495,7 @@ class PMA_Table
                                 . PMA_backquote($table) . ' LIMIT '
                                 . $GLOBALS['cfg']['MaxExactCountViews'],
                                 null, PMA_DBI_QUERY_STORE);
+                        //print_r('xxxxyyy');
                         if (!PMA_DBI_getError()) {
                             $row_count = PMA_DBI_num_rows($result);
                             PMA_DBI_free_result($result);
@@ -1035,8 +1044,8 @@ class PMA_Table
 
         if (! $is_view) {
             $GLOBALS['sql_query'] = '
-                RENAME TABLE ' . $this->getFullName(true) . '
-                      TO ' . $new_table->getFullName(true) . ';';
+                ALTER TABLE ' . $this->getName(true) . '
+                RENAME TO ' . $new_table->getName(true) ;
         } else {
             $GLOBALS['sql_query'] = '
                 ALTER TABLE ' . $this->getFullName(true) . '

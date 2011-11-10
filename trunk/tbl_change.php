@@ -142,7 +142,7 @@ require_once './libraries/tbl_links.inc.php';
  * @todo should be handled by class Table
  */
 $show_create_table = PMA_DBI_fetch_value(
-        'SELECT DBMS_METADATA.GET_DDL(\'TABLE\', \'' . $table . '\'' .($db) . '\') FROM DUAL',
+        'SELECT DBMS_METADATA.GET_DDL(\'TABLE\', \'' . $table . '\', \'' .($db) . '\') FROM DUAL',
         0, 1);
 $analyzed_sql = PMA_SQP_analyze(PMA_SQP_parse($show_create_table));
 unset($show_create_table);
@@ -176,7 +176,7 @@ if (isset($where_clause)) {
         // No row returned
         if (! $rows[$key_id]) {
             unset($rows[$key_id], $where_clause_array[$key_id]);
-            PMA_showMessage(__('MySQL returned an empty result set (i.e. zero rows).'), $local_query);
+            PMA_showMessage(__('Oracle returned an empty result set (i.e. zero rows).'), $local_query);
             echo "\n";
             require './libraries/footer.inc.php';
         } else { // end if (no row returned)

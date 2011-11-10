@@ -77,7 +77,7 @@ if (isset($_REQUEST['do_save_data'])) {
             continue;
         }
 
-        $definition = ' ADD ' . PMA_Table::generateFieldSpec(
+        $definition = '' . PMA_Table::generateFieldSpec(
             $_REQUEST['field_name'][$i],
             $_REQUEST['field_type'][$i],
             $_REQUEST['field_length'][$i],
@@ -99,7 +99,7 @@ if (isset($_REQUEST['do_save_data'])) {
             $field_primary,
             $i
         );
-
+/*
         if ($_REQUEST['field_where'] != 'last') {
             // Only the first field can be added somewhere other than at the end
             if ($i == 0) {
@@ -112,6 +112,7 @@ if (isset($_REQUEST['do_save_data'])) {
                 $definition .= ' AFTER ' . PMA_backquote($_REQUEST['field_name'][$i-1]);
             }
         }
+*/
         $definitions[] = $definition;
     } // end for
 
@@ -121,11 +122,13 @@ if (isset($_REQUEST['do_save_data'])) {
         foreach ($field_primary as $field_nr) {
             $fields[] = PMA_backquote($_REQUEST['field_name'][$field_nr]);
         }
-        $definitions[] = ' ADD PRIMARY KEY (' . implode(', ', $fields) . ') ';
+        //$definitions[] = ' ADD PRIMARY KEY (' . implode(', ', $fields) . ') ';
+        $definitions[] = ' PRIMARY KEY (' . implode(', ', $fields) . ') ';
         unset($fields);
     }
 
     // Builds the indexes statements and updates the table
+/*
     if (count($field_index)) {
         $fields = array();
         foreach ($field_index as $field_nr) {
@@ -134,8 +137,10 @@ if (isset($_REQUEST['do_save_data'])) {
         $definitions[] = ' ADD INDEX (' . implode(', ', $fields) . ') ';
         unset($fields);
     }
+*/
 
     // Builds the uniques statements and updates the table
+/*
     if (count($field_unique)) {
         $fields = array();
         foreach ($field_unique as $field_nr) {
@@ -144,8 +149,10 @@ if (isset($_REQUEST['do_save_data'])) {
         $definitions[] = ' ADD UNIQUE (' . implode(', ', $fields) . ') ';
         unset($fields);
     }
+*/
 
     // Builds the fulltext statements and updates the table
+/*
     if (count($field_fulltext)) {
         $fields = array();
         foreach ($field_fulltext as $field_nr) {
@@ -154,14 +161,15 @@ if (isset($_REQUEST['do_save_data'])) {
         $definitions[] = ' ADD FULLTEXT (' . implode(', ', $fields) . ') ';
         unset($fields);
     }
+*/
 
     // To allow replication, we first select the db to use and then run queries
     // on this db.
     PMA_DBI_select_db($db) or PMA_mysqlDie(PMA_getError(), 'USE ' . PMA_backquotes($db), '', $err_url);
-    $sql_query    = 'ALTER TABLE ' . PMA_backquote($table) . ' ' . implode(', ', $definitions);
+    $sql_query    = 'ALTER TABLE ' . PMA_backquote($table) . ' ADD ( ' . implode(', ', $definitions) . ')';
     $result = PMA_DBI_try_query($sql_query);
 
-    if ($result === true) {
+    if ($result) {
         // If comments were sent, enable relation stuff
         require_once './libraries/transformations.lib.php';
 

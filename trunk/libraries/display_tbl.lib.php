@@ -338,7 +338,7 @@ function PMA_displayTableNavigation($pos_next, $pos_prev, $sql_query, $id_for_di
     <form action="sql.php" method="post">
         <?php echo PMA_generate_common_hidden_inputs($db, $table); ?>
         <input type="hidden" name="sql_query" value="<?php echo $html_sql_query; ?>" />
-        <input type="hidden" name="pos" value="0" />
+        <input type="hidden" name="pos" value="1" />
         <input type="hidden" name="session_max_rows" value="all" />
         <input type="hidden" name="goto" value="<?php echo $goto; ?>" />
         <input type="submit" name="navig" value="<?php echo __('Show all'); ?>" />
@@ -393,7 +393,7 @@ onsubmit="return (checkFormElementInRange(this, 'session_max_rows', '<?php echo 
         <input type="submit" name="navig" <?php echo ($GLOBALS['cfg']['AjaxEnable'] ? ' class="ajax"' : ''); ?> value="<?php echo __('Show'); ?> :" />
         <input type="text" name="session_max_rows" size="3" value="<?php echo (($_SESSION['tmp_user_values']['max_rows'] != 'all') ? $_SESSION['tmp_user_values']['max_rows'] : $GLOBALS['cfg']['MaxRows']); ?>" class="textfield" onfocus="this.select()" />
         <?php echo __('row(s) starting from row #') . "\n"; ?>
-        <input type="text" name="pos" size="6" value="<?php echo (($pos_next >= $unlim_num_rows) ? 0 : $pos_next); ?>" class="textfield" onfocus="this.select()" />
+        <input type="text" name="pos" size="6" value="<?php echo (($pos_next >= $unlim_num_rows) ? 1 : $pos_next); ?>" class="textfield" onfocus="this.select()" />
     <?php
     // Display mode (horizontal/vertical and repeat headers)
     $choices = array(

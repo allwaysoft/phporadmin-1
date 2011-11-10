@@ -67,7 +67,6 @@ function PMA_auth_set_user()
 function PMA_auth_fails()
 {
     global $php_errormsg, $cfg;
-
     $conn_error = PMA_DBI_getError();
     if (!$conn_error) {
         if (isset($php_errormsg)) {

@@ -157,6 +157,7 @@ function PMA_DBI_select_db($dbname, $link = null)
  */
 function PMA_DBI_try_query($query, $link = null, $options = 0, $cache_affected_rows = true)
 {
+    //print_r($query);
     if (empty($link)) {
         if (isset($GLOBALS['userlink'])) {
             $link = $GLOBALS['userlink'];
@@ -178,12 +179,24 @@ function PMA_DBI_try_query($query, $link = null, $options = 0, $cache_affected_r
     }
 */
     $stid = oci_parse($link, $query);
-    oci_execute($stid);
- 
+    if(!$stid) {
+        $e = oci_error($link);  // For oci_execute errors pass the statement handle
+        PMA_mysqlDie($e['message'], $query);
+    }
+    
+    $result_sql=oci_execute($stid);
+    if(!$result_sql) {
+        $e = oci_error($stid);  // For oci_execute errors pass the statement handle
+        //$error_str = ($e['message'])   
+                //. ($e['sqltext']);
+        $sql_str = substr_replace($e['sqltext'], '^', $e['offset'], 0);
+        PMA_mysqlDie($e['message'], $sql_str);
+    }
+
     $r = $stid;
 
     if ($cache_affected_rows) { 
-       $GLOBALS['cached_affected_rows'] = PMA_DBI_affected_rows($link, $get_from_cache = false); 
+       $GLOBALS['cached_affected_rows'] = PMA_DBI_affected_rows($r, $get_from_cache = false); 
     }
 
     if ($GLOBALS['cfg']['DBG']['sql']) {
@@ -328,6 +341,7 @@ function PMA_DBI_get_client_info()
 function PMA_DBI_getError($link = null)
 {
     $GLOBALS['errno'] = 0;
+    return false;
 
     /* Treat false same as null because of controllink */
     if ($link === false) {
@@ -336,7 +350,6 @@ function PMA_DBI_getError($link = null)
 
     if (null === $link && isset($GLOBALS['userlink'])) {
         $link =& $GLOBALS['userlink'];
-
 // Do not stop now. On the initial connection, we don't have a $link,
 // we don't have a $GLOBALS['userlink'], but we can catch the error code
 //    } else {
@@ -353,6 +366,7 @@ function PMA_DBI_getError($link = null)
     if (0 == $error_number) {
         return false;
     }
+
 
     // keep the error number for further check after the call to PMA_DBI_getError()
     $GLOBALS['errno'] = $error_number;
@@ -420,12 +434,13 @@ function PMA_DBI_insert_id($link = null)
             return false;
         }
     }
+    return false;
     // If the primary key is BIGINT we get an incorrect result
     // (sometimes negative, sometimes positive)
     // and in the present function we don't know if the PK is BIGINT
     // so better play safe and use LAST_INSERT_ID()
     //
-    return PMA_DBI_fetch_value('SELECT LAST_INSERT_ID();', 0, 0, $link);
+    //return PMA_DBI_fetch_value('SELECT LAST_INSERT_ID();', 0, 0, $link);
 }
 
 /**
@@ -491,4 +506,9 @@ function PMA_DBI_field_flags($result, $i)
     //return oci_field_flags($result, $i);
 }
 
+function PMA_DBI_server_version($link)
+{
+    return oci_server_version($link);
+    //return oci_field_flags($result, $i);
+}
 ?>

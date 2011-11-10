@@ -2689,6 +2689,7 @@ $cfg['DBG']['sql'] = false;
  *
  * @global array $cfg['ColumnTypes']
  */
+/*
 $cfg['ColumnTypes'] = array(
     // most used
     'INT',
@@ -2757,7 +2758,44 @@ $cfg['ColumnTypes'] = array(
         'GEOMETRYCOLLECTION',
     ),
 );
+*/
+$cfg['ColumnTypes'] = array(
+    // most used
+    'VARCHAR2',
+    'CHAR',
+    'NUMBER',
+    'DATE',
 
+    // numeric
+    'NUMERIC' => array(
+        'NUMBER',
+        'FLOAT',
+        'LONG',
+        'BINARY_DOUBLE',
+        'BINARY_FLOAT',
+    ),
+
+
+    // Date/Time
+    'DATE and TIME' => array(
+        'DATE',
+    ),
+
+    // Text
+    'STRING' => array(
+        'CHAR',
+        'VARCHAR2',
+        'NVARCHAR2',
+        'VARCHAR',
+        'NCHAR',
+        '-',
+        'BLOB',
+        'CLOB',
+        'NCLOB',
+        'RAW',
+    ),
+
+);
 /**
  * Attributes
  *

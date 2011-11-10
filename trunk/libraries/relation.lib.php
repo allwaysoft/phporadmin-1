@@ -246,7 +246,7 @@ function PMA__getRelationsParam()
     //  fear it might be too slow
 
     $tab_query = 'SHOW TABLES FROM ' . PMA_backquote($GLOBALS['cfg']['Server']['pmadb']);
-    $tab_rs    = PMA_query_as_controluser($tab_query, false, PMA_DBI_QUERY_STORE);
+    //$tab_rs    = PMA_query_as_controluser($tab_query, false, PMA_DBI_QUERY_STORE);
 
     if (! $tab_rs) {
         // query failed ... ?
@@ -398,7 +398,7 @@ function PMA_getForeigners($db, $table, $column = '', $source = 'both')
 
     if (($source == 'both' || $source == 'foreign') && strlen($table)) {
         $show_create_table_query = 'SELECT DBMS_METADATA.GET_DDL(\'TABLE\',\''
-            . $table . '\', \'' . ($db) . '\' FROM DUAL';
+            . $table . '\', \'' . ($db) . '\') FROM DUAL';
         $show_create_table = PMA_DBI_fetch_value($show_create_table_query, 0, 1);
         $analyzed_sql = PMA_SQP_analyze(PMA_SQP_parse($show_create_table));
 
@@ -1005,7 +1005,6 @@ function PMA_getForeignData($foreigners, $field, $override_total, $foreign_filte
         //
         // We could also do the SELECT anyway, with a LIMIT, and ensure that
         // the current value of the field is one of the choices.
-
         $the_total   = PMA_Table::countRecords($foreign_db, $foreign_table);
 
         if ($override_total == true || $the_total < $GLOBALS['cfg']['ForeignKeyMaxLimit']) {

@@ -166,6 +166,7 @@ if (empty($sql_query) && strlen($table) && strlen($db)) {
         $sql_query = $book_sql_query;
     } else {
         $sql_query = 'SELECT * FROM ' . PMA_backquote($db) . '.' . PMA_backquote($table);
+        //$sql_query = 'SELECT * FROM ' . PMA_backquote($table);
     }
     unset($book_sql_query);
 
@@ -420,7 +421,7 @@ if (isset($GLOBALS['show_as_php']) || !empty($GLOBALS['validatequery'])) {
     $GLOBALS['querytime'] = $querytime_after - $querytime_before;
 
     // Displays an error message if required and stop parsing the script
-    if ($error        = PMA_DBI_getError()) {
+    if ($error        = PMA_DBI_getError($result)) {
         if ($is_gotofile) {
             if (strpos($goto, 'db_') === 0 && strlen($table)) {
                 $table = '';
@@ -510,7 +511,7 @@ if (isset($GLOBALS['show_as_php']) || !empty($GLOBALS['validatequery'])) {
            || $analyzed_sql[0]['where_clause'] == '1 ')
          && !isset($find_real_end)
         ) {
-
+//print_r($table.'asdfas');
             // "j u s t   b r o w s i n g"
             $unlim_num_rows = PMA_Table::countRecords($db, $table);
 
@@ -525,7 +526,7 @@ if (isset($GLOBALS['show_as_php']) || !empty($GLOBALS['validatequery'])) {
             // SELECT
             // (SELECT
             $count_query = PMA_SQP_formatHtml($parsed_sql, 'query_only', 0, $analyzed_sql[0]['position_of_first_select'] + 1);
-            $count_query .= ' SQL_CALC_FOUND_ROWS ';
+            //$count_query .= ' SQL_CALC_FOUND_ROWS ';
             // add everything that was after the first SELECT
             $count_query .= PMA_SQP_formatHtml($parsed_sql, 'query_only', $analyzed_sql[0]['position_of_first_select']+1);
             // ensure there is no semicolon at the end of the
@@ -544,7 +545,7 @@ if (isset($GLOBALS['show_as_php']) || !empty($GLOBALS['validatequery'])) {
 
             // run the count query
 
-            PMA_DBI_try_query($count_query);
+            $result_count=PMA_DBI_try_query($count_query);
             // if (mysql_error()) {
             // void.
             // I tried the case
@@ -560,7 +561,7 @@ if (isset($GLOBALS['show_as_php']) || !empty($GLOBALS['validatequery'])) {
             // SELECT COUNT(*), f1 from t1 group by f1
             // and you click to sort on count(*)
             // }
-            $unlim_num_rows = PMA_DBI_fetch_value('SELECT FOUND_ROWS()');
+            $unlim_num_rows = PMA_DBI_num_rows($result_count);
         } // end else "just browsing"
 
     } else { // not $is_select
@@ -633,7 +634,7 @@ if ((0 == $num_rows && 0 == $unlim_num_rows) || $is_affected) {
     } elseif (!empty($GLOBALS['validatequery'])) {
         $message = PMA_Message::notice(__('Validated SQL'));
     } else {
-        $message = PMA_Message::success(__('MySQL returned an empty result set (i.e. zero rows).'));
+        $message = PMA_Message::success(__('Oracle returned an empty result set (i.e. zero rows).'));
     }
 
     if (isset($GLOBALS['querytime'])) {

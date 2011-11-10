@@ -38,6 +38,8 @@ if (empty($is_db)) {
     }
 } // end if (ensures db exists)
 
+$table=strtoupper($table);
+
 if (empty($is_table) && !defined('PMA_SUBMIT_MULT') && ! defined('TABLE_MAY_BE_ABSENT')) {
     // Not a valid table name -> back to the db_sql.php
 
@@ -68,7 +70,7 @@ if (empty($is_table) && !defined('PMA_SUBMIT_MULT') && ! defined('TABLE_MAY_BE_A
                  * @todo should this check really only happen if IS_TRANSFORMATION_WRAPPER?
                  */
                 $_result = PMA_DBI_try_query(
-                    'SELECT COUNT(*) FROM ' .PMA_backquote($db) . '.' . PMA_backquote($table) . ';',
+                    'SELECT COUNT(*) FROM ' .PMA_backquote($db) . '.' . PMA_backquote($table),
                     null, PMA_DBI_QUERY_STORE);
                 $is_table = ($_result && @PMA_DBI_num_rows($_result));
                 PMA_DBI_free_result($_result);

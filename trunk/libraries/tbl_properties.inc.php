@@ -103,8 +103,8 @@ $header_cells[] = __('Type')
      . '</span>');
 $header_cells[] = __('Length/Values') . PMA_showHint(__('If column type is "enum" or "set", please enter the values using this format: \'a\',\'b\',\'c\'...<br />If you ever need to put a backslash ("\") or a single quote ("\'") amongst those values, precede it with a backslash (for example \'\\\\xyz\' or \'a\\\'b\').'));
 $header_cells[] = __('Default') . PMA_showHint(__('For default values, please enter just a single value, without backslash escaping or quotes, using this format: a'));
-$header_cells[] = __('Collation');
-$header_cells[] = __('Attributes');
+//$header_cells[] = __('Collation');
+//$header_cells[] = __('Attributes');
 $header_cells[] = __('Null');
 
 // We could remove this 'if' and let the key information be shown and
@@ -115,7 +115,7 @@ if (!$is_backup) {
     $header_cells[] = __('Index');
 }
 
-$header_cells[] = '<abbr title="AUTO_INCREMENT">' . ($display_type == 'horizontal' ? 'A_I' : 'AUTO_INCREMENT') . '</abbr>';
+//$header_cells[] = '<abbr title="AUTO_INCREMENT">' . ($display_type == 'horizontal' ? 'A_I' : 'AUTO_INCREMENT') . '</abbr>';
 
 require_once './libraries/transformations.lib.php';
 $cfgRelation = PMA_getRelationsParam();
@@ -125,7 +125,7 @@ $mime_map = array();
 $available_mime = array();
 
 $comments_map = PMA_getComments($db, $table);
-$header_cells[] = __('Comments');
+//$header_cells[] = __('Comments');
 
 if ($cfgRelation['mimework'] && $cfg['BrowseMIME']) {
     $mime_map = PMA_getMIME($db, $table);
@@ -152,6 +152,8 @@ if (isset($field_fulltext) && is_array($field_fulltext)) {
         $submit_fulltext[$fulltext_indexkey] = $fulltext_indexkey;
     }
 }
+        //print_r('xxxx');
+        //print_r($_REQUEST);
 
 for ($i = 0; $i < $num_fields; $i++) {
     if (! empty($regenerate)) {
@@ -160,7 +162,7 @@ for ($i = 0; $i < $num_fields; $i++) {
 
         $row['Field']     = (isset($_REQUEST['field_name'][$i]) ? $_REQUEST['field_name'][$i] : false);
         $row['Type']      = (isset($_REQUEST['field_type'][$i]) ? $_REQUEST['field_type'][$i] : false);
-        $row['Collation'] = (isset($_REQUEST['field_collation'][$i]) ? $_REQUEST['field_collation'][$i] : '');
+        //$row['Collation'] = (isset($_REQUEST['field_collation'][$i]) ? $_REQUEST['field_collation'][$i] : '');
         $row['Null']      = (isset($_REQUEST['field_null'][$i]) ? $_REQUEST['field_null'][$i] : '');
 
         if (isset($_REQUEST['field_key'][$i]) && $_REQUEST['field_key'][$i] == 'primary_' . $i) {
@@ -218,6 +220,7 @@ for ($i = 0; $i < $num_fields; $i++) {
 
     } elseif (isset($fields_meta[$i])) {
         $row = $fields_meta[$i];
+        //print_r($row);
         switch ($row['Default']) {
             case null:
                 if ($row['Null'] == 'YES') {
@@ -290,7 +293,8 @@ for ($i = 0; $i < $num_fields; $i++) {
     }
 
     if (! empty($row['Type'])) {
-        $type = $extracted_fieldspec['type'];
+        //$type = $extracted_fieldspec['type'];
+        //print_r($extracted_fieldspec);
         if ('set' == $extracted_fieldspec['type'] || 'enum' == $extracted_fieldspec['type']) {
             $length = $extracted_fieldspec['spec_in_brackets'];
         } else {
@@ -305,6 +309,18 @@ for ($i = 0; $i < $num_fields; $i++) {
         // creating a column
         $length = '';
     }
+
+    $length ='';
+    if ($row['DATA_PRECISION']) {
+        $length .= $row['DATA_PRECISION'];
+        if ($row['DATA_SCALE'])
+            $length .= ',' . $row['DATA_SCALE'];
+    } elseif ($row['DATA_SCALE']) {
+        $length .= '*.' . $row['DATA_SCALE'];
+    } else {
+        $length = $row['DATA_LENGTH'];
+    }
+       
 
     // some types, for example longtext, are reported as
     // "longtext character set latin7" when their charset and / or collation
@@ -361,6 +377,8 @@ for ($i = 0; $i < $num_fields; $i++) {
         $unsigned         = stristr($row['Type'], 'unsigned');
         $zerofill         = stristr($row['Type'], 'zerofill');
     }
+    //$length_to_display = $length;
+    //if ( 
     $length_to_display = $length;
 
     $content_cells[$i][$ci] = '<input id="field_' . $i . '_' . ($ci - $ci_offset) . '"'
@@ -425,6 +443,20 @@ for ($i = 0; $i < $num_fields; $i++) {
         . ' type="text" name="field_default_value[' . $i . ']" size="12"'
         . ' value="' . (isset($row['DefaultValue']) ? htmlspecialchars($row['DefaultValue']) : '') . '"'
         . ' class="textfield" />';
+    $ci++;
+    // column NULL
+    $content_cells[$i][$ci] = '<input name="field_null_orig[' . $i . ']"'
+        . ' id="field_orig_' . $i . '_' . ($ci - $ci_offset) . '" type="hidden" value="' . $row['Null'] . '" />';
+    $content_cells[$i][$ci] .= '<input name="field_null[' . $i . ']"'
+        . ' id="field_' . $i . '_' . ($ci - $ci_offset) . '"';
+//print_r('xxxxx');
+//print_r($row);
+
+    if (! empty($row['Null']) && $row['Null'] == 'Y' && $row['Null'] != 'NOT NULL') {
+        $content_cells[$i][$ci] .= ' checked="checked"';
+    }
+
+    $content_cells[$i][$ci] .= ' type="checkbox" value="NULL" />';
     $ci++;
 
     // column collation
@@ -495,16 +527,6 @@ for ($i = 0; $i < $num_fields; $i++) {
     $content_cells[$i][$ci] .= '</select>';
     $ci++;
 
-    // column NULL
-    $content_cells[$i][$ci] = '<input name="field_null[' . $i . ']"'
-        . ' id="field_' . $i . '_' . ($ci - $ci_offset) . '"';
-
-    if (! empty($row['Null']) && $row['Null'] != 'NO' && $row['Null'] != 'NOT NULL') {
-        $content_cells[$i][$ci] .= ' checked="checked"';
-    }
-
-    $content_cells[$i][$ci] .= ' type="checkbox" value="NULL" />';
-    $ci++;
 
     // column indexes
     // See my other comment about removing this 'if'.
@@ -720,7 +742,7 @@ function addField() {
 
 if ($action == 'tbl_create.php') {
     ?>
-    <table>
+    <!--<table>
     <tr valign="top">
         <th><?php echo __('Table comments'); ?>:&nbsp;</th>
         <td width="25">&nbsp;</td>
@@ -767,7 +789,7 @@ if ($action == 'tbl_create.php') {
         <?php
     }
     ?>
-    </table>
+    </table>-->
     <br />
     <?php
 } // end if ($action == 'tbl_create.php')

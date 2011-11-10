@@ -258,12 +258,12 @@ function PMA_DBI_get_tables_full($database, $table = false, $tbl_is_group = fals
         if ($table) {
             if (true === $tbl_is_group) {
                 $sql_where_table = 'AND `TABLE_NAME` LIKE \''
-                  . PMA_escape_mysql_wildcards(addslashes($table)) . '%\'';
+                  . (($table)) . '%\'';
             } elseif ('comment' === $tbl_is_group) {
                 $sql_where_table = 'AND `TABLE_COMMENT` LIKE \''
-                  . PMA_escape_mysql_wildcards(addslashes($table)) . '%\'';
+                  . (($table)) . '%\'';
             } else {
-                $sql_where_table = 'AND `TABLE_NAME` = \'' . addslashes($table) . '\'';
+                $sql_where_table = 'AND `TABLE_NAME` = \'' . ($table) . '\'';
             }
         } else {
             $sql_where_table = '';
@@ -339,7 +339,7 @@ function PMA_DBI_get_tables_full($database, $table = false, $tbl_is_group = fals
             if ($table || (true === $tbl_is_group)) {
                 $sql = "SELECT * FROM ALL_TABLES WHERE OWNER LIKE '"
                     . $each_database . '\'' 
-                    .' AND TABLE_NAME LIKE \'' . PMA_escape_mysql_wildcards(addslashes($table)) . '\'';
+                    .' AND TABLE_NAME LIKE \'' . (($table)) . '\'';
             } else {
                 $sql = 'SELECT * FROM ALL_TABLES WHERE OWNER LIKE \''
                     . $each_database . '\'';
@@ -524,7 +524,7 @@ function PMA_DBI_get_databases_full($database = null, $force_stats = false,
         // get table information from information_schema
         if ($database) {
             $sql_where_schema = 'WHERE `SCHEMA_NAME` LIKE \''
-                . addslashes($database) . '\'';
+                . ($database) . '\'';
         } else {
             $sql_where_schema = '';
         }
@@ -565,7 +565,7 @@ function PMA_DBI_get_databases_full($database = null, $force_stats = false,
            ORDER BY BINARY ' . PMA_backquote($sort_by) . ' ' . $sort_order
            . $limit;
         $databases = PMA_DBI_fetch_result($sql, 'SCHEMA_NAME', null, $link);
-
+print_r('zzzz');
         $mysql_error = PMA_DBI_getError($link);
         if (! count($databases) && $GLOBALS['errno']) {
             PMA_mysqlDie($mysql_error, $sql);
@@ -671,17 +671,17 @@ function PMA_DBI_get_columns_full($database = null, $table = null,
 
         // get columns information from information_schema
         if (null !== $database) {
-            $sql_wheres[] = '`TABLE_SCHEMA` = \'' . addslashes($database) . '\' ';
+            $sql_wheres[] = '`TABLE_SCHEMA` = \'' . ($database) . '\' ';
         } else {
             $array_keys[] = 'TABLE_SCHEMA';
         }
         if (null !== $table) {
-            $sql_wheres[] = '`TABLE_NAME` = \'' . addslashes($table) . '\' ';
+            $sql_wheres[] = '`TABLE_NAME` = \'' . ($table) . '\' ';
         } else {
             $array_keys[] = 'TABLE_NAME';
         }
         if (null !== $column) {
-            $sql_wheres[] = '`COLUMN_NAME` = \'' . addslashes($column) . '\' ';
+            $sql_wheres[] = '`COLUMN_NAME` = \'' . ($column) . '\' ';
         } else {
             $array_keys[] = 'COLUMN_NAME';
         }
@@ -971,9 +971,10 @@ function PMA_DBI_postConnect($link, $is_controluser = false)
             define('PMA_MYSQL_MAJOR_VERSION', PMA_cacheGet('PMA_MYSQL_MAJOR_VERSION', true));
             define('PMA_MYSQL_STR_VERSION', PMA_cacheGet('PMA_MYSQL_STR_VERSION', true));
         } else {
-            $mysql_version = PMA_DBI_fetch_result(
-                'SELECT * FROM V$VERSION', null, null, $link);
-            $mysql_version=implode(' ', $mysql_version);
+            //$mysql_version = PMA_DBI_fetch_result(
+                //'SELECT * FROM V$VERSION', null, null, $link);
+            //$mysql_version=implode(' ', $mysql_version);
+            $mysql_version = PMA_DBI_server_version($link);
             if ($mysql_version) {
                 $match = explode('.', $mysql_version);
                 define('PMA_MYSQL_MAJOR_VERSION', (int)$match[0]);
@@ -1321,8 +1322,9 @@ function PMA_DBI_get_warnings($link = null)
             return array();
         }
     }
+    return array();
 
-    return PMA_DBI_fetch_result('SHOW WARNINGS', null, null, $link);
+    //return PMA_DBI_fetch_result('SHOW WARNINGS', null, null, $link);
 }
 
 /**
@@ -1345,7 +1347,8 @@ function PMA_isSuperuser()
     // with mysql extension, when connection failed we don't have
     // a $userlink
     if (isset($GLOBALS['userlink'])) {
-        $r = (bool) PMA_DBI_try_query('SELECT COUNT(*) FROM mysql.user', $GLOBALS['userlink'], PMA_DBI_QUERY_STORE);
+        //TODO: 
+        $r = (bool) PMA_DBI_try_query('SELECT COUNT(*) FROM ALL_USERS', $GLOBALS['userlink'], PMA_DBI_QUERY_STORE);
         PMA_cacheSet('is_superuser', $r, true);
     } else {
         PMA_cacheSet('is_superuser', false, true);

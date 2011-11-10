@@ -70,8 +70,8 @@ function PMA_analyseShowGrant()
     $GLOBALS['is_reload_priv']     = false;
     $GLOBALS['db_to_create']       = '';
     $GLOBALS['dbs_where_create_table_allowed'] = array();
-
-    $rs_usr = PMA_DBI_try_query('SHOW GRANTS');
+    //TODO:
+    //$rs_usr = PMA_DBI_try_query('SHOW GRANTS');
 
     if (! $rs_usr) {
         return;

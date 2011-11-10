@@ -274,7 +274,7 @@ class PMA_Tracker
 
         // Get data definition snapshot of table
         $sql_query = '
-        SHOW FULL COLUMNS FROM ' . PMA_backquote($dbname) . '.' . PMA_backquote($tablename);
+        SELECT * FROM ALL_TAB_COLUMNS WHERE TABLE_OWNER LIKE \'' . ($dbname) . '\' AND TABLE_NAME LIKE \'' . ($tablename) .'\'';
 
         $sql_result = PMA_DBI_query($sql_query);
 

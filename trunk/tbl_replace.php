@@ -365,16 +365,18 @@ foreach ($query as $single_query) {
     } else {
         $result = PMA_DBI_query($single_query);
     }
+        $error_messages[] = PMA_Message::sanitize(PMA_DBI_getError($result));
 
     if (! $result) {
-        $error_messages[] = PMA_Message::sanitize(PMA_DBI_getError());
+        $error_messages[] = PMA_Message::sanitize(PMA_DBI_getError($result));
+print_r('sdfadfas');
     } else {
         // The next line contains a real assignment, it's not a typo
         if ($tmp = @PMA_DBI_affected_rows($result)) {
             $total_affected_rows += $tmp;
         }
         unset($tmp);
-
+/*
         $insert_id = PMA_DBI_insert_id();
         if ($insert_id != 0) {
             // insert_id is id of FIRST record inserted in one insert, so if we
@@ -387,6 +389,7 @@ foreach ($query as $single_query) {
             $last_message->addParam($insert_id);
             $last_messages[] = $last_message;
         }
+*/
         PMA_DBI_free_result($result);
     } // end if
 
