@@ -55,10 +55,10 @@ function PMA_exitNavigationFrame()
 
 // keep the offset of the db list in session before closing it
 if (! isset($_SESSION['tmp_user_values']['navi_limit_offset'])) {
-    $_SESSION['tmp_user_values']['navi_limit_offset'] = 1;
+    $_SESSION['tmp_user_values']['navi_limit_offset'] = 0;
 }
 if (! isset($_SESSION['tmp_user_values']['table_limit_offset']) || $_SESSION['tmp_user_values']['table_limit_offset_db'] != $db) {
-    $_SESSION['tmp_user_values']['table_limit_offset'] = 1;
+    $_SESSION['tmp_user_values']['table_limit_offset'] = 0;
     $_SESSION['tmp_user_values']['table_limit_offset_db'] = $db;
 }
 if (isset($_REQUEST['pos'])) {
@@ -250,6 +250,7 @@ $element_counter = 0;
 if ($GLOBALS['cfg']['LeftFrameLight'] && strlen($GLOBALS['db'])) {
     $table_list = PMA_getTableList($GLOBALS['db'], null, $tpos, $cfg['MaxTableList']);
     $table_count = PMA_getTableCount($GLOBALS['db']);
+    //print(count($table_list));
 
     // show selected databasename as link to DefaultTabDatabase-page
     // with table count in ()
@@ -287,6 +288,7 @@ if ($GLOBALS['cfg']['LeftFrameLight'] && strlen($GLOBALS['db'])) {
      *
      */
     if (! empty($table_list)) {
+//print(count($table_list));
         // upper table list paginator
         if (count($table_list) <= $GLOBALS['cfg']['MaxTableList'] && $table_count > $GLOBALS['cfg']['MaxTableList']) {
             $_url_params = array(
@@ -591,11 +593,14 @@ function PMA_displayTableList($tables, $visible = false,
             unset($table['is' . $sep . 'group']);
             unset($table['tab' . $sep . 'group']);
             unset($table['tab' . $sep . 'count']);
+print($table);
+print ('13124');
 
             if ($visible &&
               ((isset($_REQUEST['tbl_group'])
                 && (strpos($_REQUEST['tbl_group'], $group) === 0
                 || strpos($_REQUEST['tbl_group'], $sep . $group) !== false))
+
               || strpos($GLOBALS['table'], $group) === 0)) {
                 PMA_displayTableList($table, true,
                     $tab_group_full . $group, $table_db);

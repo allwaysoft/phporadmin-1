@@ -789,10 +789,10 @@ function PMA_displayTableHeaders(&$is_display, &$fields_meta, $fields_cnt = 0, $
             // $name_to_use_in_sort might contain a space due to
             // formatting of function expressions like "COUNT(name )"
             // so we remove the space in this situation
-            $name_to_use_in_sort = str_replace(' )', ')', $name_to_use_in_sort);
 
             if (empty($sort_expression) ) {
                 $is_in_sort = false;
+                //echo 'asdf';
             } else {
                 // Field name may be preceded by a space, or any number
                 // of characters followed by a dot (tablename.fieldname)
@@ -806,7 +806,13 @@ function PMA_displayTableHeaders(&$is_display, &$fields_meta, $fields_cnt = 0, $
                 if (! empty($sort_tbl) && strpos($sort_expression_nodirection, $sort_tbl) === false && strpos($sort_expression_nodirection, '(') === false) {
                     $sort_expression_nodirection = $sort_tbl . $sort_expression_nodirection;
                 }
-                $is_in_sort = (str_replace('`', '', $sort_tbl) . $name_to_use_in_sort == str_replace('`', '', $sort_expression_nodirection) ? true : false);
+                $is_in_sort = (str_replace('"', '', $sort_tbl) . $name_to_use_in_sort == str_replace('"', '', $sort_expression_nodirection) ? true : false);
+                //$is_in_sort =  $sort_tbl .  '"' . $name_to_use_in_sort . '"' == str_replace('"', '', $sort_expression_nodirection) ? true : false;
+                //echo  $sort_tbl .  '\"' . $name_to_use_in_sort . '\"'. '11   ';
+                //echo str_replace('\"', '', $sort_expression_nodirection) . '22   ';
+                //echo $sort_expression_nodirection . '33   ';
+                //echo $is_in_sort;
+                //echo 'asd';
             }
             // 2.1.3 Check the field name for a bracket.
             //       If it contains one, it's probably a function column
@@ -827,6 +833,7 @@ function PMA_displayTableHeaders(&$is_display, &$fields_meta, $fields_cnt = 0, $
                 $GLOBALS['cfg']['Order'] = strtoupper($GLOBALS['cfg']['Order']);
                 if ($GLOBALS['cfg']['Order'] === 'SMART') {
                     $sort_order .= (preg_match('@time|date@i', $fields_meta[$i]->type)) ? 'DESC' : 'ASC';
+                    //$sort_order .= 'DESC';
                 } else {
                     $sort_order .= $GLOBALS['cfg']['Order'];
                 }
@@ -1305,6 +1312,7 @@ function PMA_displayTableBody(&$dt_result, &$is_display, $map, $analyzed_sql) {
             $class = 'data ' . $inline_edit_class . ' ' . $not_null_class . ' ' . $alternating_color_class . ' ' . $relation_class;
             if ( $meta->name == 'ROW$NUM' ) {
                 $class = '';
+                $class = 'data ' . ' ' . $not_null_class . ' ' . $alternating_color_class . ' ' . $relation_class;
             }
 
             //  See if this column should get highlight because it's used in the
@@ -2012,11 +2020,14 @@ function PMA_displayTable(&$dt_result, &$the_disp_mode, $analyzed_sql)
         $sort_expression_nodirection = isset($matches[1]) ? trim($matches[1]) : $sort_expression;
         $sort_direction = isset($matches[2]) ? trim($matches[2]) : '';
         unset($matches);
+    //echo 'asdfa';
+     //echo $sort_expression;
     } else {
         $sort_expression = $sort_expression_nodirection = $sort_direction = '';
     }
 
     // 1.4 Prepares display of first and last value of the sorted column
+    //echo $sort_expression;
 
     if (! empty($sort_expression_nodirection)) {
         if (strpos($sort_expression_nodirection, '.') === false) {
@@ -2038,7 +2049,7 @@ function PMA_displayTable(&$dt_result, &$the_disp_mode, $analyzed_sql)
         }
         if ($sorted_column_index !== false) {
             // fetch first row of the result set
-            $row = PMA_DBI_fetch_row($dt_result);
+            //$row = PMA_DBI_fetch_row($dt_result);
             // initializing default arguments
             $default_function = 'default_function';
             $transform_function = $default_function;
@@ -2053,7 +2064,7 @@ function PMA_displayTable(&$dt_result, &$the_disp_mode, $analyzed_sql)
             $column_for_first_row = strtoupper(substr($column_for_first_row, 0, $GLOBALS['cfg']['LimitChars']));
             // fetch last row of the result set
             PMA_DBI_data_seek($dt_result, $num_rows - 1);
-            $row = PMA_DBI_fetch_row($dt_result);
+            //$row = PMA_DBI_fetch_row($dt_result);
             // check for non printable sorted row data
             $meta = $fields_meta[$sorted_column_index];
             if (stristr($meta->type, 'BLOB') || $meta->type == 'geometry') {
@@ -2183,6 +2194,7 @@ function PMA_displayTable(&$dt_result, &$the_disp_mode, $analyzed_sql)
     } // end if
     // end 2b
     // 3. ----- Displays the results table -----
+    echo $sort_expression;
     PMA_displayTableHeaders($is_display, $fields_meta, $fields_cnt, $analyzed_sql, $sort_expression, $sort_expression_nodirection, $sort_direction);
     $url_query = '';
     echo '<tbody>' . "\n";

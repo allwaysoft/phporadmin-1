@@ -59,7 +59,7 @@ if ($num_tables == 0) {
 	echo '<p>' . __('No tables found in database') . '</p>' . "\n";
 
 	// Routines
-	require './libraries/db_routines.inc.php';
+	//require './libraries/db_routines.inc.php';
 
 	// Events
 	if (PMA_MYSQL_INT_VERSION > 50100) {
@@ -540,7 +540,7 @@ PMA_listNavigator($total_num_tables, $pos, $_url_params, 'db_structure.php', 'fr
 
 <?php
 // Routines
-require './libraries/db_routines.inc.php';
+//require './libraries/db_routines.inc.php';
 
 // Events
 if (PMA_MYSQL_INT_VERSION > 50100) {

@@ -40,6 +40,17 @@ function PMA_DBI_real_connect($server, $user, $password, $client_flags, $persist
 
     return $link;
 }
+
+
+function alterdate($conn)
+{
+    //$cmd = "alter session set nls_date_format = 'YYYY-MM-DD HH24:MI:SS'";
+    $cmd = "alter session set nls_date_format = 'YYYY-MM-DD'";
+    $stid = PMA_DBI_try_query($cmd, $conn);
+    //echo $stid;
+    return $stid;
+
+}
 /**
  * @param   string  $user           mysql user name
  * @param   string  $password       mysql user password
@@ -123,6 +134,10 @@ function PMA_DBI_connect($user, $password, $is_controluser = false, $server = nu
     } // end if
     if (! $server) {
         PMA_DBI_postConnect($link, $is_controluser);
+    }
+
+    if($link) {
+        alterdate($link);
     }
     return $link;
 }

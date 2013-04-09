@@ -77,7 +77,6 @@ if ($cfgRelation['designerwork']) {
     $tab_designer['icon']   = 'b_relations.png';
     $tab_designer['link']   = 'pmd_general.php';
 }
-
 if (! $db_is_information_schema) {
     $tab_import['link']     = 'db_import.php';
     $tab_import['text']     = __('Import');
@@ -103,6 +102,7 @@ $tabs[] =& $tab_structure;
 $tabs[] =& $tab_sql;
 $tabs[] =& $tab_search;
 $tabs[] =& $tab_qbe;
+/*
 $tabs[] =& $tab_export;
 if (! $db_is_information_schema) {
     $tabs[] =& $tab_import;
@@ -111,6 +111,7 @@ if (! $db_is_information_schema) {
         $tabs[] =& $tab_privileges;
     }
 }
+*/
 if (PMA_Tracker::isActive()) {
     $tabs[] =& $tab_tracking;
 }

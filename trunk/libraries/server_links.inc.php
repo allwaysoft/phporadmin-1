@@ -44,7 +44,7 @@ if (!$GLOBALS['is_ajax_request']) {
     $tabs['sql']['icon'] = 'b_sql.png';
     $tabs['sql']['link'] = 'server_sql.php';
     $tabs['sql']['text'] = __('SQL');
-
+/*
     $tabs['status']['icon'] = 's_status.png';
     $tabs['status']['link'] = 'server_status.php';
     $tabs['status']['text'] = __('Status');
@@ -99,6 +99,7 @@ if (!$GLOBALS['is_ajax_request']) {
     $tabs['settings']['text'] = __('Settings');
     $tabs['settings']['active'] = in_array(basename($GLOBALS['PMA_PHP_SELF']),
         array('prefs_forms.php', 'prefs_manage.php'));
+*/
 
     echo PMA_generate_html_tabs($tabs, array());
     unset($tabs);
